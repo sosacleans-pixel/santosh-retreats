@@ -166,7 +166,7 @@
   /* intro heading: word reveal */
   gsap.from('.split-copy > *', { y: 50, opacity: 0, duration: 1, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: '.split', start: 'top 75%' } });
   gsap.from('.split-art', { clipPath: 'inset(100% 0% 0% 0% round 14px)', duration: 1.4, ease: 'expo.inOut', scrollTrigger: { trigger: '.split', start: 'top 70%' } });
-  gsap.fromTo('.sa-photo img', { scale: 1.18, yPercent: -4 }, { scale: 1.02, yPercent: 4, ease: 'none', scrollTrigger: { trigger: '.split-art', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.fromTo('.sa-photo img', { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: '.split-art', start: 'top bottom', end: 'bottom top', scrub: true } });
   gsap.from('.split-big', { yPercent: 40, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.split', start: 'top 55%' } });
   gsap.from('.stat', { y: 80, opacity: 0, duration: 1, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.stats', start: 'top 85%' } });
   gsap.from('.tile', { y: 70, opacity: 0, rotate: 1.5, duration: .9, stagger: .08, ease: 'power3.out', scrollTrigger: { trigger: '.tiles', start: 'top 85%' } });
