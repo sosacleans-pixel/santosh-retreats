@@ -343,3 +343,8 @@ cite{display:block;margin-top:.6rem;font-family:var(--sans);font-style:normal;fo
 .split-big{text-shadow:0 2px 22px rgba(0,0,0,.45)}
 .reduced .sa-kb,.reduced .sa-shimmer{animation:none}
 @media (prefers-reduced-motion:reduce){.sa-kb,.sa-shimmer{animation:none}}
+
+/* v3.5: palms photo + seamless sheen */
+.sa-photo img{object-position:40% 60%;filter:saturate(1.05) brightness(1.02)}
+.sa-shimmer{top:35%;left:-50%;right:-50%;background:linear-gradient(100deg,rgba(255,255,255,0) 20%,rgba(255,255,255,.10) 42%,rgba(255,255,255,.14) 50%,rgba(255,255,255,.10) 58%,rgba(255,255,255,0) 80%);mix-blend-mode:soft-light;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 35%,#000 70%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 35%,#000 70%,transparent 100%);animation:shimmer 11s ease-in-out infinite alternate}
+@keyframes shimmer{0%{transform:translate3d(-20%,0,0)}100%{transform:translate3d(20%,0,0)}}
