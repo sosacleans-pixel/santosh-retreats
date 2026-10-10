@@ -210,17 +210,7 @@
   gsap.set('.j-rail span', { width: '25%' });
   jt.to({}, { duration: .4 });
 
-  /* destinations: horizontal pinned scroll on desktop */
-  var mm = gsap.matchMedia();
-  mm.add('(min-width: 900px) and (hover: hover) and (pointer: fine)', function () {
-    var track = $('.track'), wrap = $('.track-wrap');
-    wrap.style.overflow = 'visible';
-    var dist = function () { return Math.max(0, track.scrollWidth - window.innerWidth); };
-    var tw = gsap.to(track, { x: function () { return -dist(); }, ease: 'none',
-      scrollTrigger: { trigger: '.dest', start: 'top top', end: function () { return '+=' + (dist() + 200); }, pin: '.dest-pin', scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 } });
-    return function () { wrap.style.overflow = ''; gsap.set(track, { x: 0 }); };
-  });
-  gsap.from('.dcard', { y: 90, opacity: 0, duration: 1, stagger: .08, ease: 'power3.out', scrollTrigger: { trigger: '.dest', start: 'top 75%' } });
+  gsap.from('.dcard', { y: 90, opacity: 0, duration: 1.1, stagger: .15, ease: 'power3.out', scrollTrigger: { trigger: '.dest', start: 'top 75%' } });
 
   /* card tilt (fine pointer) */
   if (fine) cards.forEach(function (c) {

@@ -291,3 +291,19 @@ cite{display:block;margin-top:.6rem;font-family:var(--sans);font-style:normal;fo
 .reduced .j-steps,.no-gsap .j-steps{position:relative;left:auto;bottom:auto;padding:0 var(--pad);width:auto}
 .reduced .j-mark,.reduced .j-numbers,.reduced .j-rail,.no-gsap .j-numbers,.no-gsap .j-rail{display:none}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.js .preloader{display:none}}
+
+/* v3.1: two-retreat grid */
+.bg-redrock{background:linear-gradient(160deg,#B4532F 0%,#C8693E 55%,#D9925C 100%);color:var(--paper)}
+.dest-pin{min-height:0;display:block;padding:clamp(5rem,10vw,8rem) var(--pad);max-width:var(--max);margin:0 auto}
+.dest-head{display:flex;flex-wrap:wrap;gap:1rem 3rem;align-items:flex-end;justify-content:space-between;margin-bottom:2.4rem}
+.dest-lede{max-width:40ch;color:var(--muted);font-size:1.12rem;margin:0}
+.track.grid2{display:grid;grid-template-columns:1fr;gap:1.4rem;width:auto;padding:0}
+@media (min-width:860px){.track.grid2{grid-template-columns:1fr 1fr}}
+.grid2 .dcard{width:auto}
+.grid2 .dc-art{height:220px}
+.grid2 .dc-art svg{width:200px;height:200px}
+.grid2 .dc-body{padding:1.6rem 1.6rem 1.7rem}
+.grid2 .dc-body h3{font-size:2.2rem}
+.dc-ph{display:flex;flex-wrap:wrap;gap:.4rem;padding-top:.7rem;margin-top:auto!important;border-top:1px solid rgba(29,29,23,.12)}
+.cta-group{font-size:.98rem;margin:1.6rem auto 0!important;opacity:.9}
+.cta-group a{color:var(--sun);font-weight:600}
