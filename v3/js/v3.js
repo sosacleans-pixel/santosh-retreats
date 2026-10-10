@@ -126,7 +126,7 @@
     a.addEventListener('click', function (e) {
       var id = a.getAttribute('href'); if (id.length < 2) return; var t = $(id); if (!t) return;
       e.preventDefault(); tog.setAttribute('aria-expanded', 'false'); list.classList.remove('open');
-      if (lenis) lenis.scrollTo(t, { offset: 0, duration: 1.4 }); else t.scrollIntoView({ behavior: 'smooth' });
+      if (lenis) lenis.scrollTo(t, { offset: -120, duration: 1.4 }); else t.scrollIntoView({ behavior: 'smooth' });
       if (t.tabIndex < 0) t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true });
     });
   });
@@ -171,8 +171,6 @@
   gsap.from('.stat', { y: 80, opacity: 0, duration: 1, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.stats', start: 'top 85%' } });
   gsap.from('.tile', { y: 70, opacity: 0, rotate: 1.5, duration: .9, stagger: .08, ease: 'power3.out', scrollTrigger: { trigger: '.tiles', start: 'top 85%' } });
   gsap.from('.incl-list li', { x: 40, opacity: 0, duration: .8, stagger: .07, ease: 'power3.out', scrollTrigger: { trigger: '.incl-list', start: 'top 80%' } });
-  gsap.from('.rooms-board', { y: 80, scale: .96, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.rooms', start: 'top 80%' } });
-  gsap.from('.rm-list li', { y: 30, opacity: 0, duration: .7, stagger: .07, ease: 'power3.out', scrollTrigger: { trigger: '.rm-list', start: 'top 85%' } });
   gsap.from('.steps3 li', { y: 80, opacity: 0, duration: 1, stagger: .14, ease: 'expo.out', scrollTrigger: { trigger: '.steps3', start: 'top 80%' } });
   $$('[data-count]').forEach(function (n) {
     var o = { v: 0 }, end = +n.dataset.count, suf = n.dataset.suffix || '';
@@ -264,3 +262,7 @@
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
 })();
+/* v3.7: preselect retreat in the request form */
+document.querySelectorAll('a[data-retreat]').forEach(function (a) {
+  a.addEventListener('click', function () { var s = document.getElementById('rq-retreat'); if (s) s.value = a.getAttribute('data-retreat'); });
+});

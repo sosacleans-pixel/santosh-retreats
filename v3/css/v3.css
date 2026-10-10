@@ -380,3 +380,14 @@ img.avatar{object-fit:cover;padding:0}
 .tp picture{position:absolute;inset:0}
 .rm-card .btn-ink{color:var(--cream)}
 @media (min-width:900px){.trip-grid .tp-wide{aspect-ratio:auto}}
+/* v3.7: request-info form */
+.story-role{font-weight:600;opacity:.85;margin:.4rem 0 0}
+.req-form{width:100%;max-width:560px;margin:1.6rem auto 1rem;text-align:left;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:var(--r);padding:1.6rem;display:grid;gap:.9rem;scroll-margin-top:7rem}
+.req-title{margin:0;font-size:1.5rem}
+.req-row{display:grid;gap:.35rem}
+.req-row label{font-weight:600;font-size:.9rem}
+.req-row small{font-weight:400;opacity:.75}
+.req-row input,.req-row select,.req-row textarea{font:inherit;color:var(--ink);background:var(--cream);border:2px solid transparent;border-radius:12px;padding:.75rem .9rem;width:100%}
+.req-row input:focus,.req-row select:focus,.req-row textarea:focus{outline:none;border-color:var(--sun)}
+.req-honey{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.thanks{min-height:80vh;display:grid;place-items:center;text-align:center;padding:9rem var(--pad) 5rem}
