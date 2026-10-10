@@ -245,7 +245,8 @@
     var cur = $('.cursor'), dot = $('.cursor-dot'), ring = $('.cursor-ring'), label = $('.cursor-label');
     var dx = gsap.quickTo(dot, 'x', { duration: .08 }), dy = gsap.quickTo(dot, 'y', { duration: .08 });
     var rx = gsap.quickTo(ring, 'x', { duration: .45, ease: 'power3.out' }), ry = gsap.quickTo(ring, 'y', { duration: .45, ease: 'power3.out' });
-    window.addEventListener('pointermove', function (e) { dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); });
+    gsap.set([dot, ring], { opacity: 0 }); var seen = false;
+    window.addEventListener('pointermove', function (e) { if (!seen) { seen = true; gsap.to([dot, ring], { opacity: 1, duration: .3 }); } dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); });
     document.addEventListener('pointerover', function (e) {
       var card = e.target.closest('.dcard'), link = e.target.closest('a, button');
       cur.classList.toggle('is-card', !!card); cur.classList.toggle('is-link', !card && !!link);
