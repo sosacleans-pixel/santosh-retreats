@@ -231,7 +231,7 @@
 
   /* story */
   gsap.to('.scrub-words .w', { opacity: 1, stagger: .05, ease: 'none', scrollTrigger: { trigger: '.scrub-words', start: 'top 80%', end: 'bottom 50%', scrub: true } });
-  gsap.from('.story-mark', { rotate: -120, scale: .6, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.story', start: 'top 80%', end: 'top 20%', scrub: true } });
+  gsap.from('.story-photo img', { scale: 1.15, yPercent: 6, ease: 'none', scrollTrigger: { trigger: '.story', start: 'top 80%', end: 'top 20%', scrub: true } });
   gsap.from('.cta', { scale: .94, borderRadius: 80, ease: 'none', scrollTrigger: { trigger: '.cta', start: 'top bottom', end: 'top 40%', scrub: true } });
   gsap.from('.story-text > p:not(.scrub-words), .story blockquote, .member', { y: 50, opacity: 0, duration: .9, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: '.story-text > p:nth-of-type(2)', start: 'top 85%' } });
   gsap.from('.acc-item', { y: 30, opacity: 0, duration: .7, stagger: .06, ease: 'power3.out', scrollTrigger: { trigger: '.acc', start: 'top 85%' } });
