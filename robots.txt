@@ -1,3 +1,4 @@
-# DRAFT PREVIEW: REMOVE AT LAUNCH (replace with "Allow: /" and a sitemap line)
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://santoshretreats.com/sitemap.xml

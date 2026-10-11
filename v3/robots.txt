@@ -1,3 +1,0 @@
-# DRAFT PREVIEW: REMOVE AT LAUNCH (replace with "Allow: /" and a sitemap line)
-User-agent: *
-Disallow: /
