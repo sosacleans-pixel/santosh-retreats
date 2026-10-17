@@ -193,26 +193,13 @@
   gsap.from('.cta-title span', { yPercent: 100, opacity: 0, rotate: 4, duration: 1.1, stagger: .12, ease: 'expo.out', scrollTrigger: { trigger: '.cta', start: 'top 70%' } });
   gsap.from('.cta-inner > p, .cta-inner > .btn', { y: 30, opacity: 0, duration: .9, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: '.cta', start: 'top 60%' } });
 
-  /* magnetic buttons + custom cursor (desktop only) */
+  /* magnetic buttons (desktop only) */
   if (fine) {
     $$('.magnetic').forEach(function (b) {
       var xTo = gsap.quickTo(b, 'x', { duration: .6, ease: 'elastic.out(1,.4)' }), yTo = gsap.quickTo(b, 'y', { duration: .6, ease: 'elastic.out(1,.4)' });
       b.addEventListener('pointermove', function (e) { var r = b.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * .35); yTo((e.clientY - r.top - r.height / 2) * .45); });
       b.addEventListener('pointerleave', function () { xTo(0); yTo(0); });
     });
-    document.body.classList.add('has-cursor');
-    var cur = $('.cursor'), dot = $('.cursor-dot'), ring = $('.cursor-ring'), label = $('.cursor-label');
-    var dx = gsap.quickTo(dot, 'x', { duration: .08 }), dy = gsap.quickTo(dot, 'y', { duration: .08 });
-    var rx = gsap.quickTo(ring, 'x', { duration: .45, ease: 'power3.out' }), ry = gsap.quickTo(ring, 'y', { duration: .45, ease: 'power3.out' });
-    gsap.set([dot, ring], { opacity: 0 }); var seen = false;
-    window.addEventListener('pointermove', function (e) { if (!seen) { seen = true; gsap.to([dot, ring], { opacity: 1, duration: .3 }); } dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); });
-    document.addEventListener('pointerover', function (e) {
-      var card = e.target.closest('.dcard'), link = e.target.closest('a, button');
-      cur.classList.toggle('is-card', !!card); cur.classList.toggle('is-link', !card && !!link);
-      label.textContent = card ? 'Inquire' : '';
-    });
-    document.addEventListener('pointerleave', function () { gsap.to([dot, ring], { opacity: 0 }); });
-    document.addEventListener('pointerenter', function () { gsap.to([dot, ring], { opacity: 1 }); });
   }
 
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
