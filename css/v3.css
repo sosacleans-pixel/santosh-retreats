@@ -135,8 +135,11 @@ sup a{text-decoration:none;font-size:.7em;padding:0 2px}
 .tiles{list-style:none;margin:0;padding:0;display:grid;gap:1rem}
 @media (min-width:640px){.tiles{grid-template-columns:1fr 1fr}}
 @media (min-width:1000px){.tiles{grid-template-columns:repeat(3,1fr)}}
-.tile{padding:1.8rem;border-radius:var(--r);min-height:200px;display:flex;flex-direction:column;justify-content:flex-end;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
-.tile:hover{transform:translateY(-6px) rotate(-.6deg)}
+.tile{padding:1.8rem;border-radius:var(--r);min-height:200px;display:flex;flex-direction:column;justify-content:flex-end}
+@media (hover:hover) and (pointer:fine){
+  .tile{transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+  .tile:hover{transform:translateY(-6px) rotate(-.6deg)}
+}
 .tile h3{font-size:1.7rem}
 .tile p{margin:0}
 /* included */

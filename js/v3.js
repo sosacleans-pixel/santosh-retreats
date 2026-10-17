@@ -174,7 +174,7 @@
   gsap.fromTo('.sa-photo img', { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: '.split-art', start: 'top bottom', end: 'bottom top', scrub: true } });
   gsap.from('.split-big', { yPercent: 40, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.split', start: 'top 55%' } });
   gsap.from('.stat', { y: 80, opacity: 0, duration: 1, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.stats', start: 'top 85%' } });
-  gsap.from('.tile', { y: 70, opacity: 0, rotate: 1.5, duration: .9, stagger: .08, ease: 'power3.out', scrollTrigger: { trigger: '.tiles', start: 'top 85%' } });
+  gsap.from('.tile', { y: 70, opacity: 0, rotate: 1.5, duration: .9, stagger: .08, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.tiles', start: 'top 85%' } });
   gsap.from('.incl-list li', { x: 40, opacity: 0, duration: .8, stagger: .07, ease: 'power3.out', scrollTrigger: { trigger: '.incl-list', start: 'top 80%' } });
   gsap.from('.steps3 li', { y: 80, opacity: 0, duration: 1, stagger: .14, ease: 'expo.out', scrollTrigger: { trigger: '.steps3', start: 'top 80%' } });
   $$('[data-count]').forEach(function (n) {
