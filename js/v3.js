@@ -173,47 +173,8 @@
   gsap.from('.split-art', { clipPath: 'inset(100% 0% 0% 0% round 14px)', duration: 1.4, ease: 'expo.inOut', scrollTrigger: { trigger: '.split', start: 'top 70%' } });
   gsap.fromTo('.sa-photo img', { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: '.split-art', start: 'top bottom', end: 'bottom top', scrub: true } });
   gsap.from('.split-big', { yPercent: 40, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.split', start: 'top 55%' } });
-  gsap.from('.stat', { y: 80, opacity: 0, duration: 1, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.stats', start: 'top 85%' } });
   gsap.from('.tile', { y: 70, opacity: 0, rotate: 1.5, duration: .9, stagger: .08, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: '.tiles', start: 'top 85%' } });
   gsap.from('.incl-list li', { x: 40, opacity: 0, duration: .8, stagger: .07, ease: 'power3.out', scrollTrigger: { trigger: '.incl-list', start: 'top 80%' } });
-  gsap.from('.steps3 li', { y: 80, opacity: 0, duration: 1, stagger: .14, ease: 'expo.out', scrollTrigger: { trigger: '.steps3', start: 'top 80%' } });
-  $$('[data-count]').forEach(function (n) {
-    var o = { v: 0 }, end = +n.dataset.count, suf = n.dataset.suffix || '';
-    n.textContent = '0' + suf;
-    ScrollTrigger.create({ trigger: n, start: 'top 90%', once: true, onEnter: function () {
-      gsap.to(o, { v: end, duration: 2, ease: 'power2.out', onUpdate: function () { n.textContent = Math.round(o.v) + suf; } });
-    } });
-  });
-
-  /* journey: pinned, scrubbed, 4 steps */
-  var steps = $$('.j-step'), nums = $$('.j-numbers span'), grads = $$('.j-grad');
-  var wave = $('.jm-wave'), tri = $('.jm-tri'), sun = $('.jm-sun');
-  var wl = wave.getTotalLength(), tl = tri.getTotalLength();
-  gsap.set(wave, { strokeDasharray: wl, strokeDashoffset: wl });
-  gsap.set(tri, { strokeDasharray: tl, strokeDashoffset: tl * .75, transformOrigin: '50% 60%' });
-  gsap.set(sun, { transformOrigin: '50% 50%', scale: .4, opacity: .3 });
-  var jt = gsap.timeline({ scrollTrigger: { trigger: '.journey', start: 'top top', end: '+=320%', scrub: 1, pin: '.journey-pin', anticipatePin: 1,
-    snap: { snapTo: 'labels', duration: { min: .2, max: .7 }, ease: 'power2.inOut', delay: .05 } } });
-  jt.addLabel('s0').to(tri, { strokeDashoffset: tl * .5, duration: .5 }, 's0');
-  var marks = [
-    function (t, at) { t.to(tri, { strokeDashoffset: 0, rotate: 0, duration: 1 }, at).to(wave, { strokeDashoffset: wl * .5, duration: 1 }, at).to(sun, { scale: .8, opacity: .6, duration: 1 }, at); },
-    function (t, at) { t.to(tri, { rotate: 180, scale: .7, duration: 1 }, at).to(wave, { strokeDashoffset: 0, duration: 1 }, at).to(sun, { scale: 1.6, opacity: .9, duration: 1 }, at); },
-    function (t, at) { t.to(tri, { rotate: 360, scale: 1.15, duration: 1 }, at).to(sun, { scale: 2.6, opacity: .4, rotate: 90, duration: 1 }, at); }
-  ];
-  for (var i = 1; i < 4; i++) {
-    var at = 's' + (i - 1) + '+=0.5';
-    jt.to(steps[i - 1], { autoAlpha: 0, y: -60, duration: .35 }, at)
-      .fromTo(steps[i], { autoAlpha: 0, y: 80 }, { autoAlpha: 1, y: 0, duration: .45 }, at + '+=0.4')
-      .to(nums[i - 1], { opacity: 0, scale: 1.25, duration: .6 }, at)
-      .fromTo(nums[i], { opacity: 0, scale: .8 }, { opacity: 1, scale: 1, duration: .6 }, at + '+=0.2')
-      .to(grads[i], { opacity: 1, duration: .9 }, at)
-      .to('.j-rail span', { width: ((i + 1) / 4 * 100) + '%', duration: .9 }, at);
-    marks[i - 1](jt, at);
-    jt.addLabel('s' + i, at + '+=0.9');
-  }
-  gsap.set('.j-rail span', { width: '25%' });
-  jt.to({}, { duration: .4 });
-
   gsap.from('.dcard', { y: 90, opacity: 0, duration: 1.1, stagger: .15, ease: 'power3.out', scrollTrigger: { trigger: '.dest', start: 'top 75%' } });
 
   /* card tilt (fine pointer) */
@@ -225,18 +186,7 @@
     c.addEventListener('pointerleave', function () { gsap.to(c, { rotateY: 0, rotateX: 0, duration: .8, ease: 'elastic.out(1,.5)' }); });
   });
 
-  /* marquee speed reacts to scroll velocity */
-  ScrollTrigger.create({ trigger: '.marquee-sec', start: 'top bottom', end: 'bottom top', onUpdate: function (s) {
-    var v = Math.min(Math.abs(s.getVelocity()) / 1200, 2.5);
-    $$('.mq-track').forEach(function (t) { t.style.animationDuration = (38 / (1 + v)) + 's'; });
-  } });
-  gsap.from('.marquee', { xPercent: function (i) { return i ? 12 : -12; }, ease: 'none', scrollTrigger: { trigger: '.marquee-sec', start: 'top bottom', end: 'bottom top', scrub: true } });
-
-  /* story */
-  gsap.to('.scrub-words .w', { opacity: 1, stagger: .05, ease: 'none', scrollTrigger: { trigger: '.scrub-words', start: 'top 80%', end: 'bottom 50%', scrub: true } });
-  gsap.from('.story-photo img', { scale: 1.15, yPercent: 6, ease: 'none', scrollTrigger: { trigger: '.story', start: 'top 80%', end: 'top 20%', scrub: true } });
   gsap.from('.cta', { scale: .94, borderRadius: 80, ease: 'none', scrollTrigger: { trigger: '.cta', start: 'top bottom', end: 'top 40%', scrub: true } });
-  gsap.from('.story-text > p:not(.scrub-words), .story blockquote, .member', { y: 50, opacity: 0, duration: .9, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: '.story-text > p:nth-of-type(2)', start: 'top 85%' } });
   gsap.from('.acc-item', { y: 30, opacity: 0, duration: .7, stagger: .06, ease: 'power3.out', scrollTrigger: { trigger: '.acc', start: 'top 85%' } });
 
   /* cta */
