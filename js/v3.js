@@ -142,7 +142,15 @@
   gsap.set('.hero-window', { clipPath: 'inset(22% 30% 22% 30% round 240px)' });
   gsap.set('.hero-img', { scale: 1.35 });
   if (lenis) lenis.stop(); else document.body.style.overflow = 'hidden';
-  var intro = gsap.timeline({ onComplete: function () { if (pre) pre.remove(); if (lenis) lenis.start(); document.body.style.overflow = ''; ScrollTrigger.refresh(); } });
+  function heroScroll() {
+    gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=110%', scrub: 1, pin: '.hero-pin', anticipatePin: 1, refreshPriority: 1 } })
+      .to('.hero-img', { scale: 1.3, ease: 'none' }, 0)
+      .to('.hero-window', { clipPath: 'inset(7% 5% 7% 5% round 36px)', ease: 'none' }, 0)
+      .to('.hero-title .char', { yPercent: -70, opacity: 0, stagger: .02, ease: 'none' }, 0)
+      .to('.hero-panel, .hero-scroll', { y: -60, opacity: 0, ease: 'none' }, .1);
+    ScrollTrigger.sort();
+  }
+  var intro = gsap.timeline({ onComplete: function () { if (pre) pre.remove(); heroScroll(); if (lenis) lenis.start(); document.body.style.overflow = ''; ScrollTrigger.refresh(); } });
   intro.to('.pre-logo .draw', { strokeDashoffset: 0, duration: 1.1, stagger: .15, ease: 'power2.inOut' })
     .fromTo('.pre-word span', { yPercent: 110 }, { yPercent: 0, duration: .6, stagger: .04, ease: 'power3.out' }, '-=.6')
     .to('.pre-inner', { opacity: 0, y: -20, duration: .4 }, '+=.15')
@@ -156,12 +164,9 @@
   if (pre) pre.addEventListener('click', function () { intro.progress(1); });
   window.addEventListener('keydown', function sk() { if (intro.isActive()) intro.progress(1); window.removeEventListener('keydown', sk); });
 
-  /* hero scroll: pinned scale + clip + text drift */
-  gsap.timeline({ scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=110%', scrub: 1, pin: '.hero-pin', anticipatePin: 1 } })
-    .to('.hero-img', { scale: 1.3, ease: 'none' }, 0)
-    .to('.hero-window', { clipPath: 'inset(7% 5% 7% 5% round 36px)', ease: 'none' }, 0)
-    .to('.hero-title .char', { yPercent: -70, opacity: 0, stagger: .02, ease: 'none' }, 0)
-    .to('.hero-panel, .hero-scroll', { y: -60, opacity: 0, ease: 'none' }, .1);
+  /* hero scroll: pinned scale + clip + text drift.
+     Built from the intro's onComplete (see heroScroll() above) so its start values are the
+     post-intro state, not the gsap.set() pre-intro state (which caused the snap-back). */
 
   /* intro heading: word reveal */
   gsap.from('.split-copy > *', { y: 50, opacity: 0, duration: 1, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: '.split', start: 'top 75%' } });
