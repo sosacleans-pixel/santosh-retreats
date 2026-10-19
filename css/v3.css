@@ -164,9 +164,8 @@ sup a{text-decoration:none;font-size:.7em;padding:0 2px}
 .dcard{scroll-snap-align:start;width:min(84vw,360px);flex:none;border-radius:var(--r);overflow:hidden;background:var(--paper);display:flex;flex-direction:column;transform-style:preserve-3d;border:1px solid rgba(29,29,23,.08)}
 .dcard.is-out{display:none}
 .dc-art{position:relative;height:170px;overflow:hidden}
-.dc-art svg{position:absolute;width:150px;height:150px;right:-18px;bottom:-30px;opacity:.35;color:var(--paper);transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.dc-art svg{position:absolute;width:150px;height:150px;right:-18px;bottom:-30px;opacity:.35;color:var(--paper)}
 .bg-sun .dc-art svg,.dc-art.bg-sun svg,.dc-art.bg-sage svg,.dc-art.bg-clay svg{color:var(--ink);opacity:.22}
-.dcard:hover .dc-art svg{transform:scale(1.25) rotate(-8deg)}
 .dc-num{position:absolute;left:1.2rem;top:.8rem;font-weight:800;font-size:3.6rem;line-height:1;letter-spacing:-.05em;opacity:.9}
 .dc-body{padding:1.3rem 1.3rem 1.4rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
 .dc-body p{margin:0}
@@ -288,8 +287,7 @@ cite{display:block;margin-top:.6rem;font-family:var(--sans);font-style:normal;fo
 
 /* v3.2: photo card headers */
 .dc-photo picture,.dc-photo img{position:absolute;inset:0;width:100%;height:100%}
-.dc-photo img{object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
-.dcard:hover .dc-photo img{transform:scale(1.05)}
+.dc-photo img{object-fit:cover}
 .dc-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 38%,rgba(0,0,0,0) 60%,rgba(0,0,0,.45) 100%)}
 .dc-photo .dc-num{color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.35);z-index:2}
 .dc-photo svg{color:#fff!important;opacity:.4!important;z-index:2}
