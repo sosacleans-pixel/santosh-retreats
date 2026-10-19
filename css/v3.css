@@ -288,6 +288,7 @@ cite{display:block;margin-top:.6rem;font-family:var(--sans);font-style:normal;fo
 .dc-credit{position:absolute;left:1rem;bottom:.6rem;z-index:3;margin:0;font-size:.68rem;color:rgba(255,255,255,.85)}
 .dc-credit a{color:inherit}
 .dc-photo img.pos-arch{object-position:22% 50%}
+.dc-photo img.pos-falls{object-position:100% 30%}
 
 /* v3.3: Cabarete kitesurf photo behind "Move. Breathe. Reset." */
 .sa-photo,.sa-photo img{position:absolute;inset:0;width:100%;height:100%}
