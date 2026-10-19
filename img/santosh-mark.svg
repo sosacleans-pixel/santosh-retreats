@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Santosh Retreats triangle-and-wave mark. Single source for the site logo: pages reference /img/santosh-mark.svg#tri; icons are rendered from it. -->
+  <symbol id="tri" viewBox="0 0 512 512"><path d="M256 70 L478 430 L290 430" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/><path d="M226 430 L40 430 L256 70" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/><path d="M325 262 L258 158 L128 370 C210 372 250 300 318 296 C372 292 386 352 340 368 C400 372 438 390 462 412" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <use href="#tri" xlink:href="#tri" width="512" height="512" style="color:#64663C"/>
+</svg>
