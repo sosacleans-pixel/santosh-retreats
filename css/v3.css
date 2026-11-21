@@ -276,7 +276,7 @@ cite{display:block;margin-top:.6rem;font-family:var(--sans);font-style:normal;fo
 .bg-redrock{background:linear-gradient(160deg,#B4532F 0%,#C8693E 55%,#D9925C 100%);color:var(--paper)}
 .dest-pin{min-height:0;display:block;padding:clamp(5rem,10vw,8rem) var(--pad);max-width:var(--max);margin:0 auto}
 .dest-head{display:flex;flex-wrap:wrap;gap:1rem 3rem;align-items:flex-end;justify-content:space-between;margin-bottom:2.4rem}
-.dest-lede{max-width:40ch;color:var(--muted);font-size:1.12rem;margin:0}
+.dest-lede{max-width:52ch;color:var(--muted);font-size:1.12rem;margin:0}
 .track.grid2{display:grid;grid-template-columns:1fr;gap:1.4rem;width:auto;padding:0}
 @media (min-width:860px){.track.grid2{grid-template-columns:1fr 1fr}}
 .grid2 .dcard{width:auto}
