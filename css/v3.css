@@ -178,6 +178,20 @@ sup a{text-decoration:none;font-size:.7em;padding:0 2px}
 .badges{display:flex;flex-wrap:wrap;gap:.35rem}
 .badge{font-size:.72rem;font-weight:600;letter-spacing:.04em;padding:.25rem .6rem;border-radius:999px;background:var(--cream);border:1px solid rgba(29,29,23,.15)}
 .badge-ink{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+
+/* In-the-works 2027 cards: darker gray body, light text for contrast (cream on #3a3a36 is about 9.4:1). */
+.dcard-wip{background:#3a3a36;color:var(--cream);border-color:rgba(242,232,220,.14)}
+.dcard-wip .dc-body h3{color:var(--cream)}
+.dcard-wip .dc-sub,.dcard-wip .dc-body>p:not(.dc-sub):not(.dc-price){color:#e4d9c9}
+.dcard-wip .badge{background:transparent;color:var(--cream);border-color:rgba(242,232,220,.4)}
+.dcard-wip .badge-wip,.badge-wip{background:var(--sun);color:var(--ink);border-color:var(--sun)}
+.dcard-wip .dc-ph{border-top-color:rgba(242,232,220,.2)}
+.dcard-wip .btn-ink{background:var(--cream);color:var(--ink)}
+.dcard-wip .btn-ink::before{background:var(--sun)}
+.dcard-wip .btn-line-ink{color:var(--cream);box-shadow:inset 0 0 0 2px rgba(242,232,220,.9)}
+.dcard-wip .btn-line-ink::before{background:var(--cream)}
+.dcard-wip .btn-line-ink:hover,.dcard-wip .btn-line-ink:focus-visible{color:var(--ink)}
+.dc-wip-label{position:absolute;top:.85rem;right:1rem;left:auto;z-index:3;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.28rem .7rem;border-radius:999px;background:var(--sun);color:var(--ink)}
 .dc-body h3{font-size:1.8rem;margin:.3rem 0 0}
 .dc-sub{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--muted)}
 .dc-body>p:not(.dc-sub):not(.dc-price){font-size:.95rem;color:var(--muted)}
@@ -276,7 +290,7 @@ cite{display:block;margin-top:.6rem;font-family:var(--sans);font-style:normal;fo
 .bg-redrock{background:linear-gradient(160deg,#B4532F 0%,#C8693E 55%,#D9925C 100%);color:var(--paper)}
 .dest-pin{min-height:0;display:block;padding:clamp(5rem,10vw,8rem) var(--pad);max-width:var(--max);margin:0 auto}
 .dest-head{display:flex;flex-wrap:wrap;gap:1rem 3rem;align-items:flex-end;justify-content:space-between;margin-bottom:2.4rem}
-.dest-lede{max-width:40ch;color:var(--muted);font-size:1.12rem;margin:0}
+.dest-lede{max-width:52ch;color:var(--muted);font-size:1.12rem;margin:0}
 .track.grid2{display:grid;grid-template-columns:1fr;gap:1.4rem;width:auto;padding:0}
 @media (min-width:860px){.track.grid2{grid-template-columns:1fr 1fr}}
 .grid2 .dcard{width:auto}
