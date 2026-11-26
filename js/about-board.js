@@ -1,5 +1,5 @@
-/* Santosh: about-section split-flap board, in the style of an old airport
-   departures board. One photo per listed retreat, in site order (DR first).
+/* Santosh: about-section photo board. Tiles flip sideways, like a card turning
+   left or right. One photo per listed retreat, in site order (DR first).
    Colombia is confirmed, so its live Santa Rosa de Cabal photo is included.
    Pauses when off-screen or when the tab is hidden. prefers-reduced-motion
    gets a simple crossfade with no flap. Mobile uses fewer slats and smaller images. */
