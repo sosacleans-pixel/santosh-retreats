@@ -13,6 +13,7 @@
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   var V = '20261126d';
+  var RATE = 0.7;
   var video = null;
   var onFirst = true;
   var visible = true;
@@ -69,13 +70,17 @@
     video.poster = 'img/hero-sosua-1400.jpg';
     video.setAttribute('aria-hidden', 'true');
     video.tabIndex = -1;
+    /* Salim asked for a slower, calmer motion: play at 0.7x (loop lasts about 8.6s) */
+    video.defaultPlaybackRate = RATE;
+    video.playbackRate = RATE;
     addSource(video, 'hero-sosua-live' + sfx + '.mp4', 'video/mp4');
     addSource(video, 'hero-sosua-live' + sfx + '.webm', 'video/webm');
     var scrim = win.querySelector('.hero-scrim');
     if (scrim) win.insertBefore(video, scrim); else win.appendChild(video);
     video.addEventListener('loadeddata', function () { ready = true; sync(); });
     video.addEventListener('canplay', function () { ready = true; sync(); });
-    video.addEventListener('playing', function () { video.classList.add('is-on'); });
+    video.addEventListener('loadedmetadata', function () { video.playbackRate = RATE; });
+    video.addEventListener('playing', function () { if (video.playbackRate !== RATE) video.playbackRate = RATE; video.classList.add('is-on'); });
     video.addEventListener('pause', function () {
       /* if the browser paused us while we should be playing (Low Power Mode), try again later */
       if (onFirst && visible && !document.hidden && !video.ended) video.classList.remove('is-on');
