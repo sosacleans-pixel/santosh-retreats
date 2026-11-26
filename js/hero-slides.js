@@ -52,6 +52,7 @@
     });
     dotEls.forEach(function (d, k) { d.setAttribute('aria-current', k === i ? 'true' : 'false'); });
     cur = i;
+    document.dispatchEvent(new CustomEvent('santosh:hero-slide', { detail: { index: i } }));
   }
   prev.addEventListener('click', function () { show(cur - 1); });
   next.addEventListener('click', function () { show(cur + 1); });
