@@ -396,7 +396,7 @@ img.avatar{object-fit:cover;padding:0}
  #inquire .req-form>.req-row:has(#rq-name),#inquire .req-form>.req-row:has(#rq-email),#inquire .req-form>.req-row:has(#rq-retreat){grid-column:auto}
 }
 
-/* About split-flap board and a slightly larger photo panel */
+/* About photo board (tiles flip sideways) and a slightly larger photo panel */
 @media (min-width:900px){
   .split{grid-template-columns:1fr 1.2fr}
 }
@@ -404,20 +404,20 @@ img.avatar{object-fit:cover;padding:0}
 @media (min-width:900px){
   .split-art{min-height:640px}
 }
-.bb{position:absolute;inset:0;display:flex;flex-direction:column;background:#1d1d17;z-index:0}
+.bb{position:absolute;inset:0;display:flex;flex-direction:row;background:#1d1d17;z-index:0}
 .bb-fallback,.sa-kb[hidden]{display:none}
-.bb-slat{position:relative;flex:1 1 0;min-height:0;border-bottom:1px solid rgba(0,0,0,.45)}
-.bb-slat:last-child{border-bottom:0}
-.bb-slot{position:relative;height:50%;overflow:hidden;perspective:900px}
+.bb-slat{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:row;border-right:1px solid rgba(0,0,0,.45)}
+.bb-slat:last-child{border-right:0}
+.bb-slot{position:relative;width:50%;height:100%;overflow:hidden;perspective:900px}
 .bb-rest,.bb-flap{position:absolute;inset:0}
 .bb-flap{transform-origin:center;z-index:2;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.bb-flap-top{transform-origin:bottom center}
-.bb-flap-bot{transform-origin:top center}
-.bb-pic{position:absolute;left:0;width:100%;height:calc(var(--rows) * 2 * 100%);top:calc(-100% * (var(--i) * 2 + var(--half)));background-size:cover;background-repeat:no-repeat;background-position:50% 50%}
-.bb-slat.is-flip-top .bb-flap-top{transform:rotateX(-90deg);transition:transform .32s cubic-bezier(.4,0,.2,1)}
-.bb-slat.is-flip-bot .bb-flap-bot{transform:rotateX(90deg);transition:transform .32s cubic-bezier(.4,0,.2,1)}
+.bb-flap-top{transform-origin:right center}
+.bb-flap-bot{transform-origin:left center}
+.bb-pic{position:absolute;top:0;height:100%;width:calc(var(--rows) * 2 * 100%);left:calc(-100% * (var(--i) * 2 + var(--half)));background-size:cover;background-repeat:no-repeat;background-position:50% 50%}
+.bb-slat.is-flip-top .bb-flap-top{transform:rotateY(-90deg);transition:transform .32s cubic-bezier(.4,0,.2,1)}
+.bb-slat.is-flip-bot .bb-flap-bot{transform:rotateY(90deg);transition:transform .32s cubic-bezier(.4,0,.2,1)}
 .bb-slat.is-flip-top .bb-flap-top,
-.bb-slat.is-flip-bot .bb-flap-bot{box-shadow:0 8px 16px rgba(0,0,0,.35)}
+.bb-slat.is-flip-bot .bb-flap-bot{box-shadow:8px 0 16px rgba(0,0,0,.35)}
 .bb-fade{display:block}
 .bb-fade-pic{position:absolute;inset:0;background-size:cover;background-position:50% 50%;background-repeat:no-repeat;opacity:0;transition:opacity .7s ease}
 .bb-fade-pic.is-on{opacity:1}
