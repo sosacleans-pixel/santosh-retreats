@@ -1,19 +1,18 @@
-/* Santosh: about-section split-flap board, in the style of an old airport
-   departures board. One photo per listed retreat, in site order (DR first).
-   Colombia is confirmed, so its live Santa Rosa de Cabal photo is included.
-   Pauses when off-screen or when the tab is hidden. prefers-reduced-motion
-   gets a simple crossfade with no flap. Mobile uses fewer slats and smaller images. */
+/* Santosh: about-section photo board. One full photo at a time, no tiles or strips.
+   Photos change with a smooth crossfade (about 1.2s) while each photo drifts in a
+   slow, subtle zoom (1.00 to 1.06, slight pan). One photo per listed retreat, in
+   site order (DR first). Colombia is confirmed, so its live Santa Rosa de Cabal
+   photo is included. The credit line always matches the photo that is visible.
+   Pauses when off-screen or when the tab is hidden. prefers-reduced-motion gets a
+   plain fade with no zoom. Mobile loads smaller images. */
 (function () {
   'use strict';
 
   var art = document.querySelector('#about .split-art');
   if (!art) return;
 
-  var CYCLE = 5500;
-  var TOP_MS = 320;
-  var GAP_MS = 50;
-  var BOT_MS = 320;
-  var STAGGER = 80;
+  var CYCLE = 5600;
+  var FADE = 1200;
 
   var slides = [
     {
@@ -77,22 +76,30 @@
   var narrowMq = window.matchMedia('(max-width: 700px)');
   var idx = 0;
   var visible = true;
-  var flipping = false;
+  var busy = false;
   var timer = 0;
   var board = null;
-  var slats = [];
-  var rows = 0;
-  var fadeA = null;
-  var fadeB = null;
+  var layers = [];
+  var front = 0;
+  var swapTimer = 0;
+  var doneTimer = 0;
 
   function srcOf(slide) {
     return narrowMq.matches ? slide.narrow : slide.wide;
   }
 
-  function preload(slide) {
+  function preload(slide, cb) {
     var im = new Image();
+    if (cb) {
+      im.onload = cb;
+      im.onerror = cb;
+    }
     im.src = srcOf(slide);
     return im;
+  }
+
+  function nextIndex() {
+    return (idx + 1) % slides.length;
   }
 
   function applyPic(el, slide) {
@@ -100,145 +107,81 @@
     el.style.backgroundPosition = slide.position || '50% 50%';
   }
 
+  function panFor(i) {
+    var dirs = [[-1, -0.6], [1, -0.6], [-1, 0.6], [1, 0.6], [0, -1], [0, 1]];
+    var d = dirs[i % dirs.length];
+    return { x: d[0] * 1.2, y: d[1] * 0.9 };
+  }
+
+  function startZoom(layer, i) {
+    var p = panFor(i);
+    layer.style.setProperty('--bb-x', p.x + '%');
+    layer.style.setProperty('--bb-y', p.y + '%');
+    layer.classList.remove('is-zoom');
+    void layer.offsetWidth;
+    if (!reduceMq.matches) layer.classList.add('is-zoom');
+  }
+
   function setCredit(slide) {
     if (creditEl) creditEl.innerHTML = slide.credit;
     if (board) board.setAttribute('aria-label', slide.alt);
   }
 
-  function nextIndex() {
-    return (idx + 1) % slides.length;
-  }
-
-  function rowCount() {
-    return narrowMq.matches ? 3 : 6;
-  }
-
-  function buildFlapBoard() {
-    rows = rowCount();
-    if (board && board.parentNode) board.parentNode.removeChild(board);
-    board = document.createElement('div');
-    board.className = 'bb';
-    board.setAttribute('role', 'img');
-    board.style.setProperty('--rows', String(rows));
-    slats = [];
-    for (var i = 0; i < rows; i++) {
-      var slat = document.createElement('div');
-      slat.className = 'bb-slat';
-      slat.style.setProperty('--i', String(i));
-      slat.innerHTML =
-        '<div class="bb-slot bb-slot-top">' +
-          '<div class="bb-rest"><div class="bb-pic bb-pic-next"></div></div>' +
-          '<div class="bb-flap bb-flap-top"><div class="bb-pic bb-pic-cur"></div></div>' +
-        '</div>' +
-        '<div class="bb-slot bb-slot-bot">' +
-          '<div class="bb-rest"><div class="bb-pic bb-pic-next"></div></div>' +
-          '<div class="bb-flap bb-flap-bot"><div class="bb-pic bb-pic-cur"></div></div>' +
-        '</div>';
-      slat.querySelectorAll('.bb-slot-top .bb-pic').forEach(function (p) { p.style.setProperty('--half', '0'); });
-      slat.querySelectorAll('.bb-slot-bot .bb-pic').forEach(function (p) { p.style.setProperty('--half', '1'); });
-      board.appendChild(slat);
-      slats.push(slat);
-    }
-    art.insertBefore(board, art.firstChild);
-    paint(idx, nextIndex());
-    setCredit(slides[idx]);
-  }
-
-  function paint(cur, nxt) {
-    var curS = slides[cur];
-    var nxtS = slides[nxt];
-    art.querySelectorAll('.bb-pic-cur').forEach(function (p) { applyPic(p, curS); });
-    art.querySelectorAll('.bb-pic-next').forEach(function (p) { applyPic(p, nxtS); });
-  }
-
-  function buildFadeBoard() {
-    if (board && board.parentNode) board.parentNode.removeChild(board);
-    board = document.createElement('div');
-    board.className = 'bb bb-fade';
-    board.setAttribute('role', 'img');
-    fadeA = document.createElement('div');
-    fadeA.className = 'bb-fade-pic is-on';
-    fadeB = document.createElement('div');
-    fadeB.className = 'bb-fade-pic';
-    board.appendChild(fadeA);
-    board.appendChild(fadeB);
-    art.insertBefore(board, art.firstChild);
-    applyPic(fadeA, slides[idx]);
-    applyPic(fadeB, slides[nextIndex()]);
-    setCredit(slides[idx]);
-    slats = [];
-    rows = 0;
-  }
-
   function build() {
     var fallback = art.querySelector('.bb-fallback, .sa-kb');
     if (fallback) fallback.setAttribute('hidden', '');
-    if (reduceMq.matches) buildFadeBoard();
-    else buildFlapBoard();
+    if (board && board.parentNode) board.parentNode.removeChild(board);
+    board = document.createElement('div');
+    board.className = 'bb' + (reduceMq.matches ? ' bb-reduced' : '');
+    board.setAttribute('role', 'img');
+    layers = [];
+    for (var k = 0; k < 2; k++) {
+      var layer = document.createElement('div');
+      layer.className = 'bb-layer';
+      board.appendChild(layer);
+      layers.push(layer);
+    }
+    art.insertBefore(board, art.firstChild);
+    front = 0;
+    applyPic(layers[0], slides[idx]);
+    layers[0].classList.add('is-on');
+    startZoom(layers[0], idx);
+    applyPic(layers[1], slides[nextIndex()]);
+    setCredit(slides[idx]);
   }
 
-  function startFlip(done) {
-    if (flipping) return;
-    flipping = true;
-    preload(slides[nextIndex()]);
-    var i = 0;
-    function flipTop() {
-      if (i >= slats.length) {
-        window.setTimeout(flipBottoms, GAP_MS);
-        return;
-      }
-      slats[i].classList.add('is-flip-top');
-      i += 1;
-      window.setTimeout(flipTop, STAGGER);
-    }
-    function flipBottoms() {
-      var j = 0;
-      function flipBot() {
-        if (j >= slats.length) {
-          window.setTimeout(finishFlip, BOT_MS + 20);
-          return;
-        }
-        slats[j].classList.add('is-flip-bot');
-        j += 1;
-        window.setTimeout(flipBot, STAGGER);
-      }
-      flipBot();
-    }
-    function finishFlip() {
-      idx = nextIndex();
-      slats.forEach(function (s) { s.classList.remove('is-flip-top', 'is-flip-bot'); });
-      paint(idx, nextIndex());
-      setCredit(slides[idx]);
-      flipping = false;
-      preload(slides[nextIndex()]);
-      if (done) done();
-    }
-    preload(slides[nextIndex()]);
-    flipTop();
-  }
-
-  function startFade() {
-    if (flipping) return;
-    flipping = true;
+  function advance() {
+    if (busy) return;
+    busy = true;
     var nxt = nextIndex();
-    applyPic(fadeB, slides[nxt]);
-    fadeB.classList.add('is-on');
-    fadeA.classList.remove('is-on');
-    window.setTimeout(function () {
-      var tmp = fadeA;
-      fadeA = fadeB;
-      fadeB = tmp;
-      idx = nxt;
-      applyPic(fadeB, slides[nextIndex()]);
-      setCredit(slides[idx]);
-      flipping = false;
-    }, 700);
+    var back = 1 - front;
+    preload(slides[nxt], function () {
+      applyPic(layers[back], slides[nxt]);
+      startZoom(layers[back], nxt);
+      layers[back].classList.add('is-on');
+      layers[front].classList.remove('is-on');
+      if (creditEl) creditEl.classList.add('is-out');
+      window.clearTimeout(swapTimer);
+      swapTimer = window.setTimeout(function () {
+        setCredit(slides[nxt]);
+        if (creditEl) creditEl.classList.remove('is-out');
+      }, Math.round(FADE * 0.5));
+      window.clearTimeout(doneTimer);
+      doneTimer = window.setTimeout(function () {
+        var old = front;
+        front = back;
+        idx = nxt;
+        layers[old].classList.remove('is-zoom');
+        applyPic(layers[old], slides[nextIndex()]);
+        busy = false;
+        preload(slides[nextIndex()]);
+      }, FADE + 40);
+    });
   }
 
   function tick() {
-    if (!visible || document.hidden || flipping) return;
-    if (reduceMq.matches) startFade();
-    else startFlip();
+    if (!visible || document.hidden || busy) return;
+    advance();
   }
 
   function arm() {
@@ -275,36 +218,35 @@
   function rebuild() {
     var keep = idx;
     disarm();
-    flipping = false;
+    window.clearTimeout(swapTimer);
+    window.clearTimeout(doneTimer);
+    busy = false;
     idx = keep;
     build();
     if (visible && !document.hidden) arm();
   }
 
-  if (typeof narrowMq.addEventListener === 'function') {
-    narrowMq.addEventListener('change', rebuild);
+  function repaint() {
+    layers.forEach(function (l, k) {
+      applyPic(l, slides[k === front ? idx : nextIndex()]);
+    });
+  }
+
+  if (typeof reduceMq.addEventListener === 'function') {
     reduceMq.addEventListener('change', rebuild);
-  } else if (narrowMq.addListener) {
-    narrowMq.addListener(rebuild);
+    narrowMq.addEventListener('change', repaint);
+  } else if (reduceMq.addListener) {
     reduceMq.addListener(rebuild);
+    narrowMq.addListener(repaint);
   }
 
   // Used only for preview screenshots; not referenced by the page.
   window.__santoshBoard = {
-    startFlip: startFlip,
-    startFade: startFade,
+    advance: advance,
     show: function (i) {
       idx = ((i % slides.length) + slides.length) % slides.length;
-      if (reduceMq.matches) {
-        applyPic(fadeA, slides[idx]);
-        applyPic(fadeB, slides[nextIndex()]);
-        fadeA.classList.add('is-on');
-        fadeB.classList.remove('is-on');
-      } else {
-        slats.forEach(function (s) { s.classList.remove('is-flip-top', 'is-flip-bot'); });
-        paint(idx, nextIndex());
-      }
-      setCredit(slides[idx]);
+      busy = false;
+      build();
     },
     getIndex: function () { return idx; },
     slides: slides
