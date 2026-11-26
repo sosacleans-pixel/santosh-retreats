@@ -17,8 +17,8 @@
   function pickSrc() {
     var narrow = window.matchMedia('(max-width: 720px)').matches;
     var webm = document.createElement('video').canPlayType('video/webm; codecs="vp9"');
-    if (narrow) return webm ? 'img/hero-sosua-live-720.webm' : 'img/hero-sosua-live-720.mp4';
-    return webm ? 'img/hero-sosua-live.webm' : 'img/hero-sosua-live.mp4';
+    if (narrow) return webm ? 'img/hero-sosua-live-720.webm?v=20261126c' : 'img/hero-sosua-live-720.mp4?v=20261126c';
+    return webm ? 'img/hero-sosua-live.webm?v=20261126c' : 'img/hero-sosua-live.mp4?v=20261126c';
   }
 
   function shouldPlay() {
